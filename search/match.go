@@ -1,6 +1,9 @@
 package search
 
-import "log"
+import (
+	"fmt"
+	"log"
+)
 
 // Result contains the result of a search
 type Result struct {
@@ -34,5 +37,7 @@ func Match(matcher Matcher, feed *Feed, searchTerm string, results chan<- *Resul
 func Display(results chan *Result) {
 	// The channel blocks until a result is written to the channel.
 	// Once the channel is closed the for loop terminates.
-
+	for result := range results {
+		fmt.Printf("%s:\n%s\n\n", result.Field, result.Content)
+	}
 }

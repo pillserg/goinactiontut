@@ -52,3 +52,12 @@ func Run(searchTerm string) {
 	// and return after the final result is diaplayed.
 	Display(results)
 }
+
+// Register is called to register a matcher for use by the program.
+func Register(feedType string, matcher Matcher) {
+	if _, exists := matchers[feedType]; exists {
+		log.Fatalln(feedType, "Matcher already registered")
+	}
+	matchers[feedType] = matcher
+	log.Println("Register", feedType, "matcher")
+}

@@ -88,10 +88,12 @@ func (m rssMatcher) Search(feed *search.Feed, searchTerm string) ([]*search.Resu
 			return nil, err
 		}
 
-		results = append(results, &search.Result{
-			Field:   "Description",
-			Content: channelItem.Description,
-		})
+		if matched {
+			results = append(results, &search.Result{
+				Field:   "Description",
+				Content: channelItem.Description,
+			})
+		}
 
 	}
 	return results, nil
@@ -104,13 +106,14 @@ func (m rssMatcher) retrieve(feed *search.Feed) (*rssDocument, error) {
 
 	resp, err := http.Get(feed.URI)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("Error while recieving [%s] [%s]", feed.URI, err)
 	}
 
 	defer resp.Body.Close()
 
 	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("Http Response Error %d",
+		return nil, fmt.Errorf("[%s] -> Http Response Error:  %d",
+			feed.URI,
 			resp.StatusCode)
 	}
 

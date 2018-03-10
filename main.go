@@ -14,6 +14,11 @@ func init() {
 }
 
 func main() {
-	// Perform the search for the specified term.
-	search.Run("president")
+	if len(os.Args) != 2 {
+		log.Fatal("search term not provided")
+		os.Exit(1)
+	}
+	searchTerm := os.Args[1]
+	log.Printf("searching for [%s]", os.Args[1])
+	search.Run(searchTerm)
 }

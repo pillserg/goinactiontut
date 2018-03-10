@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-const dataFile = "data/data.json"
+const dataFile = "data/radiot.json"
 
 type Feed struct {
 	Name string `json:"site"`
